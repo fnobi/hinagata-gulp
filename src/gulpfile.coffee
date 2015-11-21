@@ -1,5 +1,3 @@
-path = require 'path'
-
 gulp = require 'gulp'
 source = require 'vinyl-source-stream'
 sass = require 'gulp-ruby-sass'
@@ -20,23 +18,23 @@ util = require './lib/task-util'
 PROJ_NAME = 'hinagata-gulp'
 
 SRC = '.'
-SRC_SASS = [ SRC, 'sass' ].join('/')
-SRC_JS = [ SRC, 'js' ].join('/')
-SRC_JS_LIB = [ SRC_JS, 'lib' ].join('/')
-SRC_JADE = [ SRC, 'jade' ].join('/')
-SRC_JADE_HELPER = [ SRC_JADE, 'helper' ].join('/')
-SRC_CONFIG = [ SRC, 'config' ].join('/')
+SRC_SASS = "#{SRC}/sass"
+SRC_JS = "#{SRC}/js"
+SRC_JS_LIB = "#{SRC_JS}/lib"
+SRC_JADE = "#{SRC}/jade"
+SRC_JADE_HELPER = "#{SRC_JADE}/helper"
+SRC_CONFIG = "#{SRC}/config"
 
-GLOB_SASS = path.join(SRC_SASS, '**/*.scss')
-GLOB_JS = path.join(SRC_JS, '**/*.js')
-GLOB_JADE = path.join(SRC_JADE, '**/*.jade')
-GLOB_CONFIG = path.join(SRC_CONFIG, '*')
+GLOB_SASS = "#{SRC_SASS}/**/*.scss"
+GLOB_JS = "#{SRC_JS}/**/*.js"
+GLOB_JADE = "#{SRC_JADE}/**/*.jade"
+GLOB_CONFIG = "#{SRC_CONFIG}/*"
 
 DEST = '../public'
-DEST_IMG = path.join(DEST, 'img')
-DEST_CSS = path.join(DEST, 'css')
-DEST_JS = path.join(DEST, 'js')
-DEST_JS_LIB = path.join(DEST_JS, 'lib')
+DEST_IMG = "#{DEST}/img"
+DEST_CSS = "#{DEST}/css"
+DEST_JS = "#{DEST}/js"
+DEST_JS_LIB = "#{DEST_JS}/lib"
 DEST_HTML = DEST
 
 HTTP_PATH = '/'
@@ -68,7 +66,7 @@ gulp.task 'copy-lib', () ->
 gulp.task 'compile-js', () ->
     gulp.src(SRC_JS + '/hinagataGulp*.js')
         .pipe(varline(util.readConfig([
-            path.join(SRC_CONFIG, 'varline.yaml'),
+            "#{SRC_CONFIG}/varline.yaml",
             {
                 loadPath: [
                     SRC_JS + '/*.js',
@@ -85,10 +83,10 @@ gulp.task 'js', ['copy-lib', 'compile-js']
 # html
 gulp.task 'jade', () ->
     locals = util.readConfig([
-        path.join(SRC_CONFIG, 'meta.yaml'),
+        "#{SRC_CONFIG}/meta.yaml",
         {
             http_path: HTTP_PATH,
-            SNSHelper: require(SRC_JADE_HELPER + '/SNSHelper')
+            SNSHelper: require("#{SRC_JADE_HELPER}/SNSHelper")
         }
     ])
 
@@ -113,7 +111,7 @@ gulp.task 'server', () ->
 # publish
 gulp.task 'publish', () ->
     config = util.readConfig([
-        path.join(SRC_CONFIG, 'aws-credentials.json')
+        "#{SRC_CONFIG}/aws-credentials.json"
     ])
     
     publisher = awspublish.create(config)
