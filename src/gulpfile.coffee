@@ -102,7 +102,7 @@ gulp.task 'html', ['jade']
 
 # server
 gulp.task 'server', ->
-    new Koko(path.resolve(DEST), {
+    new Koko(DEST, {
         openPath: HTTP_PATH
     }).start()
 
