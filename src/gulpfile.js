@@ -11,7 +11,7 @@ var awspublish = require('gulp-awspublish');
 var rename = require('gulp-rename');
 var notify = require('gulp-notify');
 
-var util = require('./task-util');
+var util = require('./lib/task-util');
 
 
 /* ========================================= *
@@ -48,7 +48,7 @@ var onError = notify.onError({
 
 var loadLocals = function () {
     var locals = util.readConfig([
-        'data/config.yaml',
+        'config/meta.yaml',
         {
             http_path: HTTP_PATH
         }
@@ -127,7 +127,7 @@ gulp.task('server', function () {
 
 // publish
 gulp.task('publish', function () {
-    var config = util.readConfig([ 'aws-credentials.json' ]);
+    var config = util.readConfig([ 'config/aws-credentials.json' ]);
     
     var publisher = awspublish.create(config);
     gulp.src(DEST + '/**/*')
