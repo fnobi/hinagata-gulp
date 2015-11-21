@@ -7,10 +7,9 @@ Koko = require 'koko'
 awspublish = require 'gulp-awspublish'
 rename = require 'gulp-rename'
 notify = require 'gulp-notify'
-mochaPhantomJS = require 'gulp-mocha-phantomjs'
+mocha = require 'gulp-instant-mocha'
 
 util = require './lib/task-util'
-TmpTestHtml = require './lib/TmpTestHtml'
 
 
 # ========================================= #
@@ -111,11 +110,10 @@ gulp.task 'server', ->
 
 # test
 gulp.task 'test', ->
-    mochaHtml = new TmpTestHtml
-        testScriptPath: "#{DEST_JS}/hinagataGulpTest.js"
-        assertPath: 'node_modules/chai/chai.js'
-    gulp.src(mochaHtml.dest)
-        .pipe(mochaPhantomJS())
+    gulp.src("#{DEST_JS}/*Test.js")
+        .pipe(mocha({
+            assertPath: 'node_modules/chai/chai.js'
+        }))
 
 # publish
 gulp.task 'publish', ->
