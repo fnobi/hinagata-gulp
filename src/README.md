@@ -1,7 +1,5 @@
 # hinagata-gulp
 
-The best project ever.
-
 ## install dependencies
 
 ```
