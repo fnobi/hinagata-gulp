@@ -9,12 +9,14 @@
     "start": "gulp server",
     "build": "gulp",
     "watch": "gulp watch",
-    "publish": "gulp publish"
+    "publish": "gulp publish",
+    "test": "gulp test"
   },
   "devDependencies": {
     "chai": "3.4.*",
     "gulp": "3.*",
     "gulp-awspublish": "2.0.*",
+    "gulp-instant-mocha": "^1.0.0",
     "gulp-jade": "1.*",
     "gulp-mocha-phantomjs": "0.10.*",
     "gulp-notify": "2.2.*",
