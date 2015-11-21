@@ -1,0 +1,31 @@
+{
+  "name": "hinagata-gulp",
+  "description": "The best project ever.",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nobii/hinagata-gulp.git"
+  },
+  "engines": {
+    "node": ">=0.10.26"
+  },
+  "scripts": {
+    "start": "gulp server",
+    "build": "gulp",
+    "watch": "gulp watch",
+    "publish": "gulp publish"
+  },
+  "devDependencies": {
+    "varline": "1.2.*",
+    "gulp": "3.*",
+    "vinyl-source-stream": "1.1.0",
+    "gulp-ruby-sass": "1.0.0",
+    "gulp-pleeease": "2.0.*",
+    "gulp-notify": "2.2.*",
+    "gulp-jade": "1.*",
+    "js-yaml": "3.*",
+    "koko": "0.*",
+    "gulp-awspublish": "2.0.*",
+    "gulp-rename": "1.2.*"
+  }
+}

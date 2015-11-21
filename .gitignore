@@ -1,0 +1,8 @@
+.sass-cache
+node_modules
+bower_components
+.DS_Store
+validation-report.json
+validation-status.json
+/src/aws-credentials.json
+npm-debug.log

@@ -1,0 +1,5 @@
+$img_path: '/img';
+
+@function image-url($path) {
+    @return url("#{$img_path}/#{$path}");
+}

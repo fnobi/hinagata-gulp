@@ -1,0 +1,4 @@
+ul.share
+  li.share__item!= SNSHelper.tweet_button({ url: url, text: share_text, hashtags: share_hashtags })
+  li.share__item!= SNSHelper.fb_like_button({ href: url })
+  li.share__item: span: script!= SNSHelper.line_button({ text: share_text })
