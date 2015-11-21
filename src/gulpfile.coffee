@@ -17,14 +17,14 @@ util = require './lib/task-util'
 PROJ_NAME = 'hinagata-gulp'
 
 SRC = '.'
-SRC_SASS = "#{SRC}/sass"
+SRC_SCSS = "#{SRC}/scss"
 SRC_JS = "#{SRC}/js"
 SRC_JS_LIB = "#{SRC_JS}/lib"
 SRC_JADE = "#{SRC}/jade"
 SRC_JADE_HELPER = "#{SRC_JADE}/helper"
 SRC_CONFIG = "#{SRC}/config"
 
-GLOB_SASS = "#{SRC_SASS}/**/*.scss"
+GLOB_SCSS = "#{SRC_SCSS}/**/*.scss"
 GLOB_JS = "#{SRC_JS}/**/*.js"
 GLOB_JADE = "#{SRC_JADE}/**/*.jade"
 GLOB_CONFIG = "#{SRC_CONFIG}/*"
@@ -49,7 +49,7 @@ onError = notify.onError
 
 # css
 gulp.task 'sass', ->
-    sass(SRC_SASS, { style: 'compressed' })
+    sass(SRC_SCSS, { style: 'compressed' })
         .pipe(pleeease())
         .on('error', onError)
         .pipe(gulp.dest(DEST_CSS))
@@ -139,7 +139,7 @@ gulp.task 'optimize-image', (callback) ->
 
 # watch
 gulp.task 'watch', ->
-    gulp.watch(GLOB_SASS, ['sass'])
+    gulp.watch(GLOB_SCSS, ['sass'])
     gulp.watch(GLOB_JS, ['js'])
     gulp.watch(GLOB_JADE, ['jade'])
     gulp.watch(GLOB_CONFIG, ['html'])
