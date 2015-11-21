@@ -63,13 +63,13 @@ gulp.task 'copy-lib', () ->
     gulp.src(config.js_lib).pipe(gulp.dest(DEST_JS_LIB))
 
 gulp.task 'compile-js', () ->
-    gulp.src(SRC_JS + '/hinagataGulp*.js')
+    gulp.src("#{SRC_JS}/hinagataGulp*.js")
         .pipe(varline(util.readConfig([
             "#{SRC_CONFIG}/varline.yaml",
             {
                 loadPath: [
-                    SRC_JS + '/*.js',
-                    SRC_JS_LIB + '/*.js'
+                    "#{SRC_JS}/*.js",
+                    "#{SRC_JS_LIB}/*.js"
                 ]
             }
         ])))
@@ -89,7 +89,7 @@ gulp.task 'jade', () ->
         }
     ])
 
-    gulp.src(SRC_JADE + '/*.jade')
+    gulp.src("#{SRC_JADE}/*.jade")
         .pipe(jade({
             locals: locals,
             pretty: true
@@ -114,7 +114,7 @@ gulp.task 'publish', () ->
     ])
     
     publisher = awspublish.create(config)
-    gulp.src(DEST + '/**/*')
+    gulp.src("#{DEST}/**/*")
         .pipe(publisher.publish())
         .pipe(publisher.sync())
         .pipe(awspublish.reporter({
@@ -127,9 +127,9 @@ gulp.task 'optimize-image', (callback) ->
     exec = require('child_process').exec
 
     cmd = [
-        'cd ' + DEST_IMG,
-        'pngquant 256 --ext=.png -f *.png',
-        'open -a /Applications/ImageOptim.app *.png'
+        "cd #{DEST_IMG}",
+        "pngquant 256 --ext=.png -f *.png",
+        "open -a /Applications/ImageOptim.app *.png"
     ].join(' && ')
     
     exec cmd, (error, stdout, stderr) ->
