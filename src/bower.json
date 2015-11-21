@@ -6,9 +6,5 @@
     "html5shiv": "3.7.*",
     "jquery": "1.11.*",
     "reset-css": "2.0.*"
-  },
-  "devDependencies": {
-    "chai": "~3.4.2",
-    "mocha": "~2.3.4"
   }
 }
