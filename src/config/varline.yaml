@@ -1,0 +1,6 @@
+wrap: true
+
+alias:
+  $: jquery
+  _: underscore
+
