@@ -48,7 +48,7 @@ onError = notify.onError
 # ========================================= #
 
 # css
-gulp.task 'sass', () ->
+gulp.task 'sass', ->
     sass(SRC_SASS, { style: 'compressed' })
         .pipe(pleeease())
         .on('error', onError)
@@ -58,11 +58,11 @@ gulp.task 'css', ['sass']
 
 
 # js
-gulp.task 'copy-lib', () ->
+gulp.task 'copy-lib', ->
     config = util.readConfig "#{SRC_CONFIG}/copy.yaml"
     gulp.src(config.js_lib).pipe(gulp.dest(DEST_JS_LIB))
 
-gulp.task 'compile-js', () ->
+gulp.task 'compile-js', ->
     gulp.src("#{SRC_JS}/hinagataGulp*.js")
         .pipe(varline(util.readConfig([
             "#{SRC_CONFIG}/varline.yaml",
@@ -80,7 +80,7 @@ gulp.task 'js', ['copy-lib', 'compile-js']
 
 
 # html
-gulp.task 'jade', () ->
+gulp.task 'jade', ->
     locals = util.readConfig([
         "#{SRC_CONFIG}/meta.yaml",
         {
@@ -101,14 +101,14 @@ gulp.task 'html', ['jade']
 
 
 # server
-gulp.task 'server', () ->
+gulp.task 'server', ->
     new Koko(path.resolve(DEST), {
         openPath: HTTP_PATH
     }).start()
 
 
 # publish
-gulp.task 'publish', () ->
+gulp.task 'publish', ->
     config = util.readConfig([
         "#{SRC_CONFIG}/aws-credentials.json"
     ])
@@ -137,7 +137,7 @@ gulp.task 'optimize-image', (callback) ->
         
 
 # watch
-gulp.task 'watch', () ->
+gulp.task 'watch', ->
     gulp.watch(GLOB_SASS, ['sass'])
     gulp.watch(GLOB_JS, ['js'])
     gulp.watch(GLOB_JADE, ['jade'])
