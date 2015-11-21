@@ -94,6 +94,7 @@ gulp.task 'jade', ->
             locals: locals,
             pretty: true
         }))
+        .pipe(rename(util.renameDotSlash))
         .on('error', onError)
         .pipe(gulp.dest(DEST_HTML))
 

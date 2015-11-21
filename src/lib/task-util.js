@@ -45,6 +45,13 @@ module.exports = {
     },
     readFile: function (src) {
         return fs.readFileSync(src, 'utf8');
+    },
+    renameDotSlash: function (path) {
+        if (/\./.test(path.basename)) {
+            var parts = path.basename.split(/\./);
+            path.basename = parts.pop();
+            path.dirname += '/' + parts.join('/');
+        }
     }
 };
 
