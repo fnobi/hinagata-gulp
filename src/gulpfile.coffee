@@ -1,5 +1,4 @@
 gulp = require 'gulp'
-source = require 'vinyl-source-stream'
 sass = require 'gulp-ruby-sass'
 pleeease = require 'gulp-pleeease'
 varline = require('varline').gulp
@@ -49,7 +48,7 @@ onError = notify.onError
 # ========================================= #
 
 # css
-gulp.task 'sass', () ->
+gulp.task 'sass', ->
     sass(SRC_SASS, { style: 'compressed' })
         .pipe(pleeease())
         .on('error', onError)
@@ -59,18 +58,18 @@ gulp.task 'css', ['sass']
 
 
 # js
-gulp.task 'copy-lib', () ->
+gulp.task 'copy-lib', ->
     config = util.readConfig "#{SRC_CONFIG}/copy.yaml"
     gulp.src(config.js_lib).pipe(gulp.dest(DEST_JS_LIB))
 
-gulp.task 'compile-js', () ->
-    gulp.src(SRC_JS + '/hinagataGulp*.js')
+gulp.task 'compile-js', ->
+    gulp.src("#{SRC_JS}/hinagataGulp*.js")
         .pipe(varline(util.readConfig([
             "#{SRC_CONFIG}/varline.yaml",
             {
                 loadPath: [
-                    SRC_JS + '/*.js',
-                    SRC_JS_LIB + '/*.js'
+                    "#{SRC_JS}/*.js",
+                    "#{SRC_JS_LIB}/*.js"
                 ]
             }
         ])))
@@ -81,7 +80,7 @@ gulp.task 'js', ['copy-lib', 'compile-js']
 
 
 # html
-gulp.task 'jade', () ->
+gulp.task 'jade', ->
     locals = util.readConfig([
         "#{SRC_CONFIG}/meta.yaml",
         {
@@ -90,7 +89,7 @@ gulp.task 'jade', () ->
         }
     ])
 
-    gulp.src(SRC_JADE + '/*.jade')
+    gulp.src("#{SRC_JADE}/*.jade")
         .pipe(jade({
             locals: locals,
             pretty: true
@@ -102,20 +101,20 @@ gulp.task 'html', ['jade']
 
 
 # server
-gulp.task 'server', () ->
+gulp.task 'server', ->
     new Koko(path.resolve(DEST), {
         openPath: HTTP_PATH
     }).start()
 
 
 # publish
-gulp.task 'publish', () ->
+gulp.task 'publish', ->
     config = util.readConfig([
         "#{SRC_CONFIG}/aws-credentials.json"
     ])
     
     publisher = awspublish.create(config)
-    gulp.src(DEST + '/**/*')
+    gulp.src("#{DEST}/**/*")
         .pipe(publisher.publish())
         .pipe(publisher.sync())
         .pipe(awspublish.reporter({
@@ -128,9 +127,9 @@ gulp.task 'optimize-image', (callback) ->
     exec = require('child_process').exec
 
     cmd = [
-        'cd ' + DEST_IMG,
-        'pngquant 256 --ext=.png -f *.png',
-        'open -a /Applications/ImageOptim.app *.png'
+        "cd #{DEST_IMG}",
+        "pngquant 256 --ext=.png -f *.png",
+        "open -a /Applications/ImageOptim.app *.png"
     ].join(' && ')
     
     exec cmd, (error, stdout, stderr) ->
@@ -138,7 +137,7 @@ gulp.task 'optimize-image', (callback) ->
         
 
 # watch
-gulp.task 'watch', () ->
+gulp.task 'watch', ->
     gulp.watch(GLOB_SASS, ['sass'])
     gulp.watch(GLOB_JS, ['js'])
     gulp.watch(GLOB_JADE, ['jade'])
