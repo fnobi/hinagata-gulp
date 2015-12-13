@@ -13,16 +13,16 @@
     "publish": "gulp publish"
   },
   "devDependencies": {
-    "varline": "1.2.*",
     "gulp": "3.*",
-    "vinyl-source-stream": "1.1.0",
-    "gulp-ruby-sass": "1.0.0",
-    "gulp-pleeease": "2.0.*",
-    "gulp-notify": "2.2.*",
+    "gulp-awspublish": "2.0.*",
     "gulp-jade": "1.*",
+    "gulp-notify": "2.2.*",
+    "gulp-pleeease": "2.0.*",
+    "gulp-rename": "1.2.*",
+    "gulp-ruby-sass": "1.0.0",
     "js-yaml": "3.*",
     "koko": "0.*",
-    "gulp-awspublish": "2.0.*",
-    "gulp-rename": "1.2.*"
+    "varline": "1.2.*",
+    "vinyl-source-stream": "1.1.0"
   }
 }
