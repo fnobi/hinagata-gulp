@@ -7,9 +7,9 @@ Koko = require 'koko'
 awspublish = require 'gulp-awspublish'
 rename = require 'gulp-rename'
 notify = require 'gulp-notify'
+jadePostman = require './lib/jadePostman'
 
 util = require './lib/task-util'
-JadePostman = require './lib/JadePostman'
 
 
 # ========================================= #
@@ -42,12 +42,6 @@ HTTP_PATH = '/'
 onError = notify.onError
     title: "Error: <%= error.plugin %> / #{PROJ_NAME}"
     message: '<%= error.message %>'
-
-jadePostman = new JadePostman
-    permalink: "/post/<%= page.permalink %>/index.html"
-    layout:
-        post: "#{SRC_JADE}/layout/PostLayout.jade"
-
 
 # ========================================= #
 # tasks
@@ -91,27 +85,25 @@ gulp.task 'jade', ->
         "#{SRC_CONFIG}/meta.yaml",
         {
             http_path: HTTP_PATH,
-            SNSHelper: require("#{SRC_JADE_HELPER}/SNSHelper"),
-            toc: jadePostman.toc()
+            SNSHelper: require("#{SRC_JADE_HELPER}/SNSHelper")
         }
     ])
 
     gulp.src("#{SRC_JADE}/*.jade")
+        .pipe(jadePostman({
+            locals: locals
+            posts: "../posts/*.md"
+            layout: "#{SRC_JADE}/layout/PostLayout"
+            block: "PostBlock"
+        }))
         .pipe(jade({
-            locals: locals,
             pretty: true
         }))
         .pipe(rename(util.renameDotSlash))
         .on('error', onError)
         .pipe(gulp.dest(DEST_HTML))
 
-gulp.task 'post-jade', ->
-    gulp.src("#{SRC_POST}/*.md")
-        .pipe(jadePostman.transform())
-        .on('error', onError)
-        .pipe(gulp.dest(DEST_HTML))
-
-gulp.task 'html', ['jade', 'post-jade']
+gulp.task 'html', ['jade']
 
 
 # server
