@@ -9,6 +9,7 @@ rename = require 'gulp-rename'
 notify = require 'gulp-notify'
 
 util = require './lib/task-util'
+JadePostman = require './lib/JadePostman'
 
 
 # ========================================= #
@@ -41,6 +42,11 @@ HTTP_PATH = '/'
 onError = notify.onError
     title: "Error: <%= error.plugin %> / #{PROJ_NAME}"
     message: '<%= error.message %>'
+
+jadePostman = new JadePostman
+    permalink: "/post/<%= page.permalink %>/index.html"
+    layout:
+        post: "#{SRC_JADE}/layout/PostLayout.jade"
 
 
 # ========================================= #
@@ -85,7 +91,8 @@ gulp.task 'jade', ->
         "#{SRC_CONFIG}/meta.yaml",
         {
             http_path: HTTP_PATH,
-            SNSHelper: require("#{SRC_JADE_HELPER}/SNSHelper")
+            SNSHelper: require("#{SRC_JADE_HELPER}/SNSHelper"),
+            toc: jadePostman.toc()
         }
     ])
 
@@ -98,7 +105,13 @@ gulp.task 'jade', ->
         .on('error', onError)
         .pipe(gulp.dest(DEST_HTML))
 
-gulp.task 'html', ['jade']
+gulp.task 'post-jade', ->
+    gulp.src("#{SRC_POST}/*.md")
+        .pipe(jadePostman.transform())
+        .on('error', onError)
+        .pipe(gulp.dest(DEST_HTML))
+
+gulp.task 'html', ['jade', 'post-jade']
 
 
 # server
