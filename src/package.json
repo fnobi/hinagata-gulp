@@ -1,6 +1,7 @@
 {
   "name": "hinagata-gulp",
   "description": "Web page development with gulp.js",
+  "private": true,
   "version": "0.1.0",
   "engines": {
     "node": ">=0.10.26"
