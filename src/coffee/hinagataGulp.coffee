@@ -1,0 +1,3 @@
+hinagataGulp = {
+    bf: new BrowserFeature()
+}

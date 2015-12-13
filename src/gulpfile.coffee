@@ -2,6 +2,7 @@ gulp = require 'gulp'
 sass = require 'gulp-ruby-sass'
 pleeease = require 'gulp-pleeease'
 varline = require('varline').gulp
+coffee = require 'gulp-coffee'
 jade = require 'gulp-jade'
 Koko = require 'koko'
 awspublish = require 'gulp-awspublish'
@@ -18,6 +19,8 @@ PROJ_NAME = 'hinagata-gulp'
 
 SRC = '.'
 SRC_SCSS = "#{SRC}/scss"
+SRC_COFFEE = "#{SRC}/coffee"
+SRC_COFFEE_LIB = "#{SRC_COFFEE}/lib"
 SRC_JS = "#{SRC}/js"
 SRC_JS_LIB = "#{SRC_JS}/lib"
 SRC_JADE = "#{SRC}/jade"
@@ -25,7 +28,7 @@ SRC_JADE_HELPER = "#{SRC_JADE}/helper"
 SRC_CONFIG = "#{SRC}/config"
 
 GLOB_SCSS = "#{SRC_SCSS}/**/*.scss"
-GLOB_JS = "#{SRC_JS}/**/*.js"
+GLOB_COFFEE = "#{SRC_COFFEE}/**/*.coffee"
 GLOB_JADE = "#{SRC_JADE}/**/*.jade"
 GLOB_CONFIG = "#{SRC_CONFIG}/*"
 
@@ -62,7 +65,13 @@ gulp.task 'copy-lib', ->
     config = util.readConfig "#{SRC_CONFIG}/copy.yaml"
     gulp.src(config.js_lib).pipe(gulp.dest(DEST_JS_LIB))
 
-gulp.task 'varline', ->
+gulp.task 'coffee', ->
+    gulp.src(GLOB_COFFEE)
+        .pipe(coffee({ bare:true }))
+        .on('error', onError)
+        .pipe(gulp.dest(SRC_JS))
+        
+gulp.task 'varline', 'coffee', ->
     gulp.src("#{SRC_JS}/hinagataGulp*.js")
         .pipe(varline(util.readConfig([
             "#{SRC_CONFIG}/varline.yaml",
@@ -140,7 +149,7 @@ gulp.task 'optimize-image', (callback) ->
 # watch
 gulp.task 'watch', ->
     gulp.watch(GLOB_SCSS, ['sass'])
-    gulp.watch(GLOB_JS, ['js'])
+    gulp.watch(GLOB_COFFEE, ['js'])
     gulp.watch(GLOB_JADE, ['jade'])
     gulp.watch(GLOB_CONFIG, ['html'])
 
