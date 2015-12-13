@@ -62,7 +62,7 @@ gulp.task 'copy-lib', ->
     config = util.readConfig "#{SRC_CONFIG}/copy.yaml"
     gulp.src(config.js_lib).pipe(gulp.dest(DEST_JS_LIB))
 
-gulp.task 'compile-js', ->
+gulp.task 'varline', ->
     gulp.src("#{SRC_JS}/hinagataGulp*.js")
         .pipe(varline(util.readConfig([
             "#{SRC_CONFIG}/varline.yaml",
@@ -76,7 +76,7 @@ gulp.task 'compile-js', ->
         .on('error', onError)
         .pipe(gulp.dest(DEST_JS))
 
-gulp.task 'js', ['copy-lib', 'compile-js']
+gulp.task 'js', ['copy-lib', 'varline']
 
 
 # html
