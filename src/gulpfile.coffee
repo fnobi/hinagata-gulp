@@ -2,7 +2,6 @@ gulp = require 'gulp'
 sass = require 'gulp-ruby-sass'
 pleeease = require 'gulp-pleeease'
 varline = require('varline').gulp
-jade = require 'gulp-jade'
 Koko = require 'koko'
 awspublish = require 'gulp-awspublish'
 rename = require 'gulp-rename'
@@ -20,13 +19,10 @@ SRC = '.'
 SRC_SCSS = "#{SRC}/scss"
 SRC_JS = "#{SRC}/js"
 SRC_JS_LIB = "#{SRC_JS}/lib"
-SRC_JADE = "#{SRC}/jade"
-SRC_JADE_HELPER = "#{SRC_JADE}/helper"
 SRC_CONFIG = "#{SRC}/config"
 
 GLOB_SCSS = "#{SRC_SCSS}/**/*.scss"
 GLOB_JS = "#{SRC_JS}/**/*.js"
-GLOB_JADE = "#{SRC_JADE}/**/*.jade"
 GLOB_CONFIG = "#{SRC_CONFIG}/*"
 
 DEST = '../public'
@@ -34,7 +30,6 @@ DEST_IMG = "#{DEST}/img"
 DEST_CSS = "#{DEST}/css"
 DEST_JS = "#{DEST}/js"
 DEST_JS_LIB = "#{DEST_JS}/lib"
-DEST_HTML = DEST
 
 HTTP_PATH = '/'
 
@@ -79,28 +74,6 @@ gulp.task 'varline', ->
 gulp.task 'js', ['copy-lib', 'varline']
 
 
-# html
-gulp.task 'jade', ->
-    locals = util.readConfig([
-        "#{SRC_CONFIG}/meta.yaml",
-        {
-            http_path: HTTP_PATH,
-            SNSHelper: require("#{SRC_JADE_HELPER}/SNSHelper")
-        }
-    ])
-
-    gulp.src("#{SRC_JADE}/*.jade")
-        .pipe(jade({
-            locals: locals,
-            pretty: true
-        }))
-        .pipe(rename(util.renameDotSlash))
-        .on('error', onError)
-        .pipe(gulp.dest(DEST_HTML))
-
-gulp.task 'html', ['jade']
-
-
 # server
 gulp.task 'server', ->
     new Koko(DEST, {
@@ -141,9 +114,7 @@ gulp.task 'optimize-image', (callback) ->
 gulp.task 'watch', ->
     gulp.watch(GLOB_SCSS, ['sass'])
     gulp.watch(GLOB_JS, ['js'])
-    gulp.watch(GLOB_JADE, ['jade'])
-    gulp.watch(GLOB_CONFIG, ['html'])
 
 
 # default
-gulp.task 'default', ['css', 'js', 'html']
+gulp.task 'default', ['css', 'js']

@@ -15,7 +15,6 @@
   "devDependencies": {
     "gulp": "3.*",
     "gulp-awspublish": "2.0.*",
-    "gulp-jade": "1.*",
     "gulp-notify": "2.2.*",
     "gulp-pleeease": "2.0.*",
     "gulp-rename": "1.2.*",
