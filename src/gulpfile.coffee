@@ -1,7 +1,7 @@
 gulp = require 'gulp'
 sass = require 'gulp-ruby-sass'
 pleeease = require 'gulp-pleeease'
-varline = require('varline').gulp
+browserify = require 'gulp-browserify'
 jade = require 'gulp-jade'
 Koko = require 'koko'
 awspublish = require 'gulp-awspublish'
@@ -62,21 +62,13 @@ gulp.task 'copy-lib', ->
     config = util.readConfig "#{SRC_CONFIG}/copy.yaml"
     gulp.src(config.js_lib).pipe(gulp.dest(DEST_JS_LIB))
 
-gulp.task 'varline', ->
+gulp.task 'browserify', ->
     gulp.src("#{SRC_JS}/hinagataGulp*.js")
-        .pipe(varline(util.readConfig([
-            "#{SRC_CONFIG}/varline.yaml",
-            {
-                loadPath: [
-                    "#{SRC_JS}/*.js",
-                    "#{SRC_JS_LIB}/*.js"
-                ]
-            }
-        ])))
+        .pipe(browserify())
         .on('error', onError)
         .pipe(gulp.dest(DEST_JS))
 
-gulp.task 'js', ['copy-lib', 'varline']
+gulp.task 'js', ['copy-lib', 'browserify']
 
 
 # html
