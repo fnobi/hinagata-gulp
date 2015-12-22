@@ -3,3 +3,15 @@ $img_path: '/img';
 @function image-url($path) {
     @return url("#{$img_path}/#{$path}");
 }
+
+@mixin mouse-mode {
+    body.mouse-mode {
+        @content;
+    }
+}
+
+@mixin touch-mode {
+    body.touch-mode {
+        @content;
+    }
+}
