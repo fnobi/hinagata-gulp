@@ -3,19 +3,16 @@ name: hinagata-gulp
 url:
   http://hinagata-gulp/
 
-repository:
-  git://github.com/nobii/hinagata-gulp.git
-
 site_name:
   hinagata-gulp
 
 description:
-  The best project ever.
+  hinagata-gulp website.
 
 keywords: []
 
 share_text:
-  hinagata-gulp
+  hinagata-gulp share text.
 
 share_hashtags: ''
 
