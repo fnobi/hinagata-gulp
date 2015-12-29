@@ -65,7 +65,9 @@ gulp.task 'copy-lib', ->
 gulp.task 'browserify', ->
     gulp.src("#{SRC_JS}/hinagataGulp*.js")
         .pipe browserify
+            extensions: ['.coffee']
             transform: [
+                'coffeeify',
                 'debowerify'
             ]
         .on('error', onError)
