@@ -64,7 +64,11 @@ gulp.task 'copy-lib', ->
 
 gulp.task 'browserify', ->
     gulp.src("#{SRC_JS}/hinagataGulp*.js")
-        .pipe(browserify())
+        .pipe browserify
+            transform: [
+                [ "babelify", { "presets": ["es2015"] } ],
+                'debowerify'
+            ]
         .on('error', onError)
         .pipe(gulp.dest(DEST_JS))
 
