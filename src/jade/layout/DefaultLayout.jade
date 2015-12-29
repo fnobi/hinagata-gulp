@@ -53,6 +53,8 @@ html(lang="ja")
     block StylesheetBlock
       link(rel="stylesheet", href=http_path + "css/hinagata-gulp.css")
   body
+    script
+      include ../partial/ua.js
     != SNSHelper.line_button_script()
 
     section.wrapper
