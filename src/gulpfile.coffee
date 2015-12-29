@@ -29,6 +29,7 @@ GLOB_SCSS = "#{SRC_SCSS}/**/*.scss"
 GLOB_JS = "#{SRC_JS}/**/*.js"
 GLOB_JADE = "#{SRC_JADE}/**/*.jade"
 GLOB_CONFIG = "#{SRC_CONFIG}/*"
+GLOB_POST = "../posts/*.md"
 
 DEST = '../public'
 DEST_IMG = "#{DEST}/img"
@@ -92,7 +93,7 @@ gulp.task 'jade', ->
     gulp.src("#{SRC_JADE}/*.jade")
         .pipe(jadePostman({
             locals: locals
-            posts: "../posts/*.md"
+            posts: GLOB_POST
             layout: "#{SRC_JADE}/layout/PostLayout"
             block: "PostBlock"
         }))
