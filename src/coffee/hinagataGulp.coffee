@@ -1,3 +1,3 @@
-var hinagataGulp = {
+hinagataGulp = {
     bf: new BrowserFeature()
-};
+}
