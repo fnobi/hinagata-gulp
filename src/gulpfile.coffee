@@ -64,7 +64,10 @@ gulp.task 'copy-lib', ->
 
 gulp.task 'browserify', ->
     gulp.src("#{SRC_JS}/hinagataGulp*.js")
-        .pipe(browserify())
+        .pipe browserify
+            transform: [
+                'debowerify'
+            ]
         .on('error', onError)
         .pipe(gulp.dest(DEST_JS))
 
