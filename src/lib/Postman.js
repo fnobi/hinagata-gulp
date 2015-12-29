@@ -19,6 +19,9 @@ module.exports = function (opts) {
     var metaProperty = opts.metaProperty || 'meta';
     var bodyProperty = opts.bodyProperty || 'body';
     var frontMatterProperty = opts.frontMatterProperty || 'frontMatter';
+    var markedOpts = opts.markedOpts || {
+        breaks: true
+    };
 
     function transformName(template, postName) {
         return path.resolve(path.join(
@@ -64,7 +67,7 @@ module.exports = function (opts) {
                 post.contents = new Buffer(templateSource);
                 post.data = locals;
                 post.data[metaProperty] = file[frontMatterProperty];
-                post.data[bodyProperty] = marked(file.contents.toString());
+                post.data[bodyProperty] = marked(file.contents.toString(), markedOpts);
                 postman.push(post);
                 
                 callback();
