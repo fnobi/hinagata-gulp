@@ -1,0 +1,7 @@
+extends layout/DefaultLayout
+
+prepend ConfigBlock
+  - page_name = meta.title
+
+block ContentBlock
+  != body

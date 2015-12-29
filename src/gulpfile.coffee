@@ -7,7 +7,7 @@ Koko = require 'koko'
 awspublish = require 'gulp-awspublish'
 rename = require 'gulp-rename'
 notify = require 'gulp-notify'
-jadePostman = require './lib/jadePostman'
+postman = require './lib/postman'
 
 util = require './lib/task-util'
 
@@ -91,11 +91,11 @@ gulp.task 'jade', ->
     ])
 
     gulp.src("#{SRC_JADE}/*.jade")
-        .pipe(jadePostman({
+        .pipe(postman({
             locals: locals
             posts: GLOB_POST
-            layout: "#{SRC_JADE}/layout/PostLayout"
-            block: "PostBlock"
+            base: SRC_JADE
+            template: "#{SRC_JADE}/post.jade"
         }))
         .pipe(jade({
             pretty: true

@@ -23,8 +23,8 @@
     "gulp-rename": "1.2.*",
     "gulp-ruby-sass": "1.0.0",
     "js-yaml": "3.*",
-    "jstransformer-marked": "1.0.*",
     "koko": "0.*",
+    "marked": "0.3.*",
     "varline": "1.2.*",
     "vinyl-source-stream": "1.1.0"
   }
