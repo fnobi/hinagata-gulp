@@ -13,6 +13,7 @@
     "publish": "gulp publish"
   },
   "devDependencies": {
+    "coffee-script": "1.10.*",
     "gulp": "3.*",
     "gulp-awspublish": "2.0.*",
     "gulp-front-matter": "1.3.*",
