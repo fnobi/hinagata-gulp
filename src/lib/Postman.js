@@ -19,9 +19,12 @@ module.exports = function (opts) {
     var metaProperty = opts.metaProperty || 'meta';
     var bodyProperty = opts.bodyProperty || 'body';
     var frontMatterProperty = opts.frontMatterProperty || 'frontMatter';
+    var archiveProperty = opts.archiveProperty || 'archive';
     var markedOpts = opts.markedOpts || {
         breaks: true
     };
+
+    var files = [];
 
     function transformName(template, postName) {
         return path.resolve(path.join(
@@ -42,15 +45,16 @@ module.exports = function (opts) {
             return callback();
         }
         
-        // TODO: tocが必要な場合は、すべて作ってからpushする必要がありそう
         file.data = locals;
-        this.push(file);
+        files.push(file);
         
         return callback();
     }
 
     function flush(callback) {
         var postman = this;
+
+        var archive = [];
         
         gulp.src(posts)
             .pipe(frontMatter({
@@ -63,13 +67,24 @@ module.exports = function (opts) {
                     base: base,
                     path: transformName(template, file.path)
                 });
+
+                var meta = file[frontMatterProperty];
+                meta.slug = path.basename(post.basename, path.extname(post.basename));
                 
                 post.contents = new Buffer(templateSource);
                 post.data = locals;
-                post.data[metaProperty] = file[frontMatterProperty];
+                post.data[metaProperty] = meta;
                 post.data[bodyProperty] = marked(file.contents.toString(), markedOpts);
-                postman.push(post);
+                files.push(post);
                 
+                archive.push(meta);
+                
+                callback();
+            }, function (callback) {
+                files.forEach(function (file) {
+                    file.data[archiveProperty] = archive;
+                    postman.push(file);
+                }.bind(this));
                 callback();
             }))
             .on('end', callback);
