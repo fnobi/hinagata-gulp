@@ -4,5 +4,5 @@ bower_components
 .DS_Store
 validation-report.json
 validation-status.json
-/src/aws-credentials.json
+/src/config/aws-credentials.json
 npm-debug.log
