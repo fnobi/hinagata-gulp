@@ -5,6 +5,7 @@ var through = require('through2');
 var gutil = require('gulp-util');
 var frontMatter = require('gulp-front-matter');
 var marked = require('marked');
+var _ = require('lodash');
 
 var PLUGIN_NAME = 'gulp-postman';
 
@@ -52,8 +53,6 @@ module.exports = function (opts) {
     }
 
     function flush(callback) {
-        var postman = this;
-
         var archive = [];
         
         gulp.src(posts)
@@ -72,7 +71,7 @@ module.exports = function (opts) {
                 meta.slug = path.basename(post.basename, path.extname(post.basename));
                 
                 post.contents = new Buffer(templateSource);
-                post.data = locals;
+                post.data = _.clone(locals);
                 post.data[metaProperty] = meta;
                 post.data[bodyProperty] = marked(file.contents.toString(), markedOpts);
                 files.push(post);
@@ -83,10 +82,10 @@ module.exports = function (opts) {
             }, function (callback) {
                 files.forEach(function (file) {
                     file.data[archiveProperty] = archive;
-                    postman.push(file);
+                    this.push(file);
                 }.bind(this));
                 callback();
-            }))
+            }.bind(this)))
             .on('end', callback);
     }
 
