@@ -68,7 +68,7 @@ module.exports = function (opts) {
                 });
 
                 var meta = file[frontMatterProperty];
-                meta.slug = path.basename(post.basename, path.extname(post.basename));
+                meta.slug = path.basename(file.path, '.md');
                 
                 post.contents = new Buffer(templateSource);
                 post.data = _.clone(locals);
