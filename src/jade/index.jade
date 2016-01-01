@@ -8,4 +8,7 @@ prepend ConfigBlock
 // append JavascriptBlock
 
 block ContentBlock
-  | hello, world!
+  ul
+    each post in archive
+      li
+        a(href='/'+post.slug+'.html')= post.title
