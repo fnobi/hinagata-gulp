@@ -9,6 +9,9 @@
   "scripts": {
     "start": "gulp server",
     "build": "gulp",
+    "build-js": "gulp js",
+    "build-css": "gulp css",
+    "build-html": "gulp html",
     "watch": "gulp watch",
     "publish": "gulp publish"
   },
