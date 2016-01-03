@@ -7,7 +7,7 @@ Koko = require 'koko'
 awspublish = require 'gulp-awspublish'
 rename = require 'gulp-rename'
 notify = require 'gulp-notify'
-postman = require './lib/postman'
+postman = require 'gulp-postman'
 
 util = require './lib/task-util'
 

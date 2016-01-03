@@ -23,6 +23,7 @@
     "gulp-jade": "1.*",
     "gulp-notify": "2.2.*",
     "gulp-pleeease": "2.0.*",
+    "gulp-postman": "0.1.*",
     "gulp-rename": "1.2.*",
     "gulp-ruby-sass": "1.0.0",
     "js-yaml": "3.*",
