@@ -9,8 +9,6 @@ rename = require 'gulp-rename'
 notify = require 'gulp-notify'
 readConfig = require 'read-config'
 
-util = require './lib/task-util'
-
 
 # ========================================= #
 # const
@@ -64,16 +62,14 @@ gulp.task 'copy-lib', ->
     gulp.src(config.js_lib).pipe(gulp.dest(DEST_JS_LIB))
 
 gulp.task 'varline', ->
+    varlineConfig = readConfig "#{SRC_CONFIG}/varline.yaml", { basedir: '.' }
+    varlineConfig.loadPath = [
+        "#{SRC_JS}/*.js",
+        "#{SRC_JS_LIB}/*.js"
+    ]
+        
     gulp.src("#{SRC_JS}/hinagataGulp*.js")
-        .pipe(varline(util.readConfig([
-            "#{SRC_CONFIG}/varline.yaml",
-            {
-                loadPath: [
-                    "#{SRC_JS}/*.js",
-                    "#{SRC_JS_LIB}/*.js"
-                ]
-            }
-        ])))
+        .pipe(varline(varlineConfig))
         .on('error', onError)
         .pipe(gulp.dest(DEST_JS))
 
@@ -86,12 +82,18 @@ gulp.task 'jade', ->
     locals.http_path = HTTP_PATH
     locals.SNSHelper = require("#{SRC_JADE_HELPER}/SNSHelper")
 
+    renameRule = (path) ->
+        if /\./.test path.basename
+            parts = path.basename.split /\./
+            path.basename = parts.pop()
+            path.dirname += '/' + parts.join('/')
+
     gulp.src("#{SRC_JADE}/*.jade")
         .pipe(jade({
             locals: locals,
             pretty: true
         }))
-        .pipe(rename(util.renameDotSlash))
+        .pipe(rename(renameRule))
         .on('error', onError)
         .pipe(gulp.dest(DEST_HTML))
 
