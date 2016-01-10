@@ -7,6 +7,7 @@ Koko = require 'koko'
 awspublish = require 'gulp-awspublish'
 rename = require 'gulp-rename'
 notify = require 'gulp-notify'
+readConfig = require 'read-config'
 
 util = require './lib/task-util'
 
@@ -59,7 +60,7 @@ gulp.task 'css', ['sass']
 
 # js
 gulp.task 'copy-lib', ->
-    config = util.readConfig "#{SRC_CONFIG}/copy.yaml"
+    config = readConfig "#{SRC_CONFIG}/copy.yaml", { basedir: '.' }
     gulp.src(config.js_lib).pipe(gulp.dest(DEST_JS_LIB))
 
 gulp.task 'varline', ->
@@ -81,13 +82,9 @@ gulp.task 'js', ['copy-lib', 'varline']
 
 # html
 gulp.task 'jade', ->
-    locals = util.readConfig([
-        "#{SRC_CONFIG}/meta.yaml",
-        {
-            http_path: HTTP_PATH,
-            SNSHelper: require("#{SRC_JADE_HELPER}/SNSHelper")
-        }
-    ])
+    locals = readConfig "#{SRC_CONFIG}/meta.yaml", { basedir: '.' }
+    locals.http_path = HTTP_PATH
+    locals.SNSHelper = require("#{SRC_JADE_HELPER}/SNSHelper")
 
     gulp.src("#{SRC_JADE}/*.jade")
         .pipe(jade({
@@ -110,9 +107,7 @@ gulp.task 'server', ->
 
 # publish
 gulp.task 'publish', ->
-    config = util.readConfig([
-        "#{SRC_CONFIG}/aws-credentials.json"
-    ])
+    config = readConfig "#{SRC_CONFIG}/aws-credentials.json", { basedir: '.' }
     
     publisher = awspublish.create(config)
     gulp.src("#{DEST}/**/*")
