@@ -9,6 +9,9 @@
   "scripts": {
     "start": "gulp server",
     "build": "gulp",
+    "build-js": "gulp js",
+    "build-css": "gulp css",
+    "build-html": "gulp html",
     "watch": "gulp watch",
     "publish": "gulp publish"
   },
@@ -27,6 +30,7 @@
     "gulp-ruby-sass": "1.0.0",
     "js-yaml": "3.*",
     "koko": "0.*",
+    "read-config": "git://github.com/coditorium/nodejs-read-config.git",
     "vinyl-source-stream": "1.1.0"
   }
 }

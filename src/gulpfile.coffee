@@ -7,8 +7,7 @@ Koko = require 'koko'
 awspublish = require 'gulp-awspublish'
 rename = require 'gulp-rename'
 notify = require 'gulp-notify'
-
-util = require './lib/task-util'
+readConfig = require 'read-config'
 
 
 # ========================================= #
@@ -59,7 +58,7 @@ gulp.task 'css', ['sass']
 
 # js
 gulp.task 'copy-lib', ->
-    config = util.readConfig "#{SRC_CONFIG}/copy.yaml"
+    config = readConfig "#{SRC_CONFIG}/copy.yaml"
     gulp.src(config.js_lib).pipe(gulp.dest(DEST_JS_LIB))
 
 gulp.task 'browserify', ->
@@ -77,20 +76,22 @@ gulp.task 'js', ['copy-lib', 'browserify']
 
 # html
 gulp.task 'jade', ->
-    locals = util.readConfig([
-        "#{SRC_CONFIG}/meta.yaml",
-        {
-            http_path: HTTP_PATH,
-            SNSHelper: require("#{SRC_JADE_HELPER}/SNSHelper")
-        }
-    ])
+    locals = readConfig "#{SRC_CONFIG}/meta.yaml"
+    locals.http_path = HTTP_PATH
+    locals.SNSHelper = require("#{SRC_JADE_HELPER}/SNSHelper")
+
+    renameRule = (path) ->
+        if /\./.test path.basename
+            parts = path.basename.split /\./
+            path.basename = parts.pop()
+            path.dirname += '/' + parts.join('/')
 
     gulp.src("#{SRC_JADE}/*.jade")
         .pipe(jade({
             locals: locals,
             pretty: true
         }))
-        .pipe(rename(util.renameDotSlash))
+        .pipe(rename(renameRule))
         .on('error', onError)
         .pipe(gulp.dest(DEST_HTML))
 
@@ -106,9 +107,7 @@ gulp.task 'server', ->
 
 # publish
 gulp.task 'publish', ->
-    config = util.readConfig([
-        "#{SRC_CONFIG}/aws-credentials.json"
-    ])
+    config = readConfig "#{SRC_CONFIG}/aws-credentials.json"
     
     publisher = awspublish.create(config)
     gulp.src("#{DEST}/**/*")
