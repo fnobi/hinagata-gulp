@@ -58,11 +58,11 @@ gulp.task 'css', ['sass']
 
 # js
 gulp.task 'copy-lib', ->
-    config = readConfig "#{SRC_CONFIG}/copy.yaml", { basedir: '.' }
+    config = readConfig "#{SRC_CONFIG}/copy.yaml"
     gulp.src(config.js_lib).pipe(gulp.dest(DEST_JS_LIB))
 
 gulp.task 'varline', ->
-    varlineConfig = readConfig "#{SRC_CONFIG}/varline.yaml", { basedir: '.' }
+    varlineConfig = readConfig "#{SRC_CONFIG}/varline.yaml"
     varlineConfig.loadPath = [
         "#{SRC_JS}/*.js",
         "#{SRC_JS_LIB}/*.js"
@@ -78,7 +78,7 @@ gulp.task 'js', ['copy-lib', 'varline']
 
 # html
 gulp.task 'jade', ->
-    locals = readConfig "#{SRC_CONFIG}/meta.yaml", { basedir: '.' }
+    locals = readConfig "#{SRC_CONFIG}/meta.yaml"
     locals.http_path = HTTP_PATH
     locals.SNSHelper = require("#{SRC_JADE_HELPER}/SNSHelper")
 
@@ -109,7 +109,7 @@ gulp.task 'server', ->
 
 # publish
 gulp.task 'publish', ->
-    config = readConfig "#{SRC_CONFIG}/aws-credentials.json", { basedir: '.' }
+    config = readConfig "#{SRC_CONFIG}/aws-credentials.json"
     
     publisher = awspublish.create(config)
     gulp.src("#{DEST}/**/*")

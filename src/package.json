@@ -27,7 +27,7 @@
     "js-yaml": "3.*",
     "koko": "0.*",
     "varline": "1.2.*",
-    "read-config": "1.6.*",
+    "read-config": "git://github.com/coditorium/nodejs-read-config.git",
     "vinyl-source-stream": "1.1.0"
   }
 }
